@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct PublishedDemoApp: App {
+    var person = Person()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(person: person)
         }
     }
 }

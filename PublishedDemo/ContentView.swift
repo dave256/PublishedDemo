@@ -25,7 +25,8 @@ class Person: ObservableObject {
 struct ContentView: View {
     // if the view "owns the data" use @StateObject for a class
     // or if the view is passed a class, use @ObservedObject
-    @StateObject private var person = Person()
+    @ObservedObject var person: Person
+
     @State private var courseName = ""
     var body: some View {
         VStack {
@@ -33,8 +34,11 @@ struct ContentView: View {
             TextField("last", text: $person.lastName)
             TextField("course name", text: $courseName)
             Button("Add Course") {
-                person.addCourse(courseName: courseName)
-            }
+                if !courseName.isEmpty {
+                    person.addCourse(courseName: courseName)
+                    courseName = ""
+                }
+            }.disabled(courseName.isEmpty)
             ForEach(person.courses.indices, id: \.self) { idx in
                 HStack {
                     Text(person.courses[idx])
@@ -48,6 +52,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(person: Person())
     }
 }
