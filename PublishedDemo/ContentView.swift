@@ -39,9 +39,9 @@ struct ContentView: View {
                     courseName = ""
                 }
             }.disabled(courseName.isEmpty)
-            ForEach(person.courses.indices, id: \.self) { idx in
+            ForEach($person.courses, id: \.self) { $course in
                 HStack {
-                    Text(person.courses[idx])
+                    Text(course)
                     Spacer()
                 }
             }
